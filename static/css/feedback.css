@@ -1,0 +1,7 @@
+textarea {
+  resize: vertical;
+}
+
+#submit-button, #send-response {
+  margin-left: 15px;
+}
