@@ -1,0 +1,9 @@
+* {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#contact-form {
+  background-color: orange;
+}
