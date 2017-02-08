@@ -3,12 +3,11 @@ import os
 from flask import Flask, abort, render_template, request
 import requests
 
-# Accessing API keys and confidential information stored in environment variables
-# (for security reasons. Alternatively, store them in a secret configuration file.
-# Whatever option you choose, do not push these to GitHub!
-API_KEY = os.environ['MAILGUN_API_KEY']
-DOMAIN_NAME = os.environ['MAILGUN_DOMAIN_NAME']
-ADMIN_EMAIL = os.environ['MAILGUN_ADMIN_EMAIL']
+from helper import EmailNotSentException, is_valid_form_submission
+from controllers.feedback_controller import send_email, \
+    WHITE_LIST_PARAMS as feedback_params
+from controllers.file_upload_controller import send_email_with_file, \
+    WHITE_LIST_PARAMS as file_upload_params
 
 app = Flask("demo")
 
@@ -36,40 +35,12 @@ def bye_custom(name, time):
 def feedback_form():
     return render_template("feedback.htm.j2")
 
-class EmailNotSentException(Exception):
-    def __init__(self, message):
-        super(EmailNotSentException, self).__init__(message)
-        
-    def __str__(self, *args, **kwargs):
-        return "EmailNotSentException: {}".format(self.message)
-
-def send_email(name, comment, email):
-    send_response = requests.post(
-        "https://api.mailgun.net/v3/{0}/messages".format(DOMAIN_NAME),
-        auth=("api", API_KEY),
-        data={"from": "CF:G Demo <demo@{0}>".format(DOMAIN_NAME),
-              "to": ADMIN_EMAIL,
-              "subject": "Someone has commented on your site!",
-              "text": """
-              Hi Darren,
-              
-              {0} ({2}) has posted the following comment on your website:
-              {1}
-              """.format(name, comment, email)})
-    # A response code of 200 means the request to send the email succeeded
-    if send_response.status_code == 200:
-        print "Email successfully sent"
-    else:
-        print send_response.status_code
-        raise EmailNotSentException("Failed to send email (API error)")
-
 @app.route("/feedback_submit", methods=['POST'])
 def sign_up():
-    # Basic paramaters validation to prevent form hacking
-    white_list_params = set(['email', 'comments', 'name'])
-    for param in request.form.iterkeys():
-        if param not in white_list_params:
-            abort(400)
+    if not is_valid_form_submission(request.form.iterkeys(), feedback_params):
+        # better error handling to custom error page if I have time to do so...
+        abort(400)
+    
     print "Sending the following response..."
     try:
         send_email(request.form['name'], request.form['comments'],
@@ -79,6 +50,24 @@ def sign_up():
         abort(400)
     
     return render_template("ok.htm.j2")
+
+@app.route("/file_upload", methods=['GET', 'POST'])
+def file_upload():
+    if request.method == 'POST':
+        if not (is_valid_form_submission(request.form.iterkeys(), file_upload_params) or
+                is_valid_form_submission(request.files.iterkeys(), file_upload_params)):
+            abort(400)
+        
+        try:
+            send_email_with_file(request.form['name'], request.files['file_input'])
+        except EmailNotSentException as e:
+            print e.message
+            abort(400)
+        
+        return render_template("ok.htm.j2")
+    # it must be a GET request since that's the only other allowed request on this path
+    else:
+        return render_template("file_upload.htm.j2")
 
 # A Pythonic convention which allows you import this script without necessarily
 # running the flask app defined here
