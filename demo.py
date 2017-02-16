@@ -11,7 +11,6 @@ def display_400(error):
 
 @app.route("/")
 def hello():
-    print __name__
     return render_template("hello.htm.j2")
 
 @app.route("/<name>")
