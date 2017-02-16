@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request
+from flask import Flask, render_template
 
 app = Flask("demo")
 
