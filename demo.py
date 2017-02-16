@@ -1,7 +1,4 @@
-import os
-
 from flask import Flask, abort, render_template, request
-import requests
 
 app = Flask("demo")
 
@@ -28,4 +25,11 @@ def bye_custom(name, time):
 # A Pythonic convention which allows you import this script without necessarily
 # running the flask app defined here
 if __name__ == "__main__":
+    
+    """In class, to see the results of the application, we had to type
+    'localhost:5000/[path_name]' to see the returned result in our browser.
+    the extra 'port=80' saves you some keystroke and allows you to just type
+    'localhost/[path_name]' as by default, 'localhost' is equivalent to
+    'localhost:80' in browsers.
+    """
     app.run(port=80, debug=True)
