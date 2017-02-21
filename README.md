@@ -2,7 +2,13 @@
 
 A collection of example Flask code written as demo in preparation for CF:G's Advanced Python course
 
-## FAQ
+## FAQs
+**In my Command Prompt/Terminal, sometimes I see the following message:
+`* Running on http://127.0.0.1:5000/`. So, why did you tell me to type `localhost:5000/[whatever_path_name]` instead in my browser?**
+
+This is because `localhost` is "the same" as `127.0.0.1` - essentially, it is an easier, more human-readable version of the web address
+pointing to the server you are running locally.
+
 **Why do all of your template files end in `.htm.j2` rather than `.html`?**
 
 This is purely done to make sure my template files are highlighted correctly with pretty and helpful colours in my text editor.
