@@ -1,0 +1,12 @@
+{% extends "base.htm.j2" %}
+{% block title %}Your comment has been successfully submitted{% endblock %}
+
+{% block content %}
+  <h3>Success!</h3>
+  <p>You have submitted the following details:</p>
+  <ul>
+    <li>Name: {{ form_data['name'] | escape }}</li>
+    <li>Email: {{ form_data['email'] | escape }}</li>
+    <li>Your comment: {{ form_data['comments'] | escape }}</li>
+  </ul>
+{% endblock %}

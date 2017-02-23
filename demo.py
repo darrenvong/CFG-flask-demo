@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask("demo")
 
@@ -21,6 +21,13 @@ def bye_someone(name):
 @app.route("/goodbye/<name>/<time>")
 def bye_custom(name, time):
     return render_template("hello.htm.j2", bye=True, name=name.title(), time=time)
+
+@app.route("/signup", methods=['GET', 'POST'])
+def sign_up():
+    if request.method == 'GET':
+        return render_template("feedback.htm.j2")
+    else:
+        return render_template("ok.htm.j2", form_data=request.form)
 
 # A Pythonic convention which allows you import this script without necessarily
 # running the flask app defined here
