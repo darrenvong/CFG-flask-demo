@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello From Flask</title>
+  </head>
+  <body>
+    <nav>
+      <a href="{{ url_for('hello') }}">Home</a>
+      <a href="{{ url_for('sign_up') }}">Feedback form</a>
+    </nav>
+    {# The double curly brace around the Python code tells the template interpreter (Jinja2) used by Flask
+     to run the Python code and print out the textual result of the code onto the page for the user
+     to see in their browser.
+     
+     In order to be able to run some Python code in a HTML template file, Flask's
+     template engine requires you to "wrap" them around {% %} tags. These tags also mean
+     indentation of your code doesn't "work" any more, and so in order to let Python know
+     where the end of your code block is, you have to explicitly mark it with keywords like
+     "endif" to mark the end of your conditional logic.
+    #}
+    {% if name and bye %}
+      <h1>Goodbye {{name}}!
+      {% if time == "day" %}
+        Have a good day!</h1>
+      {% elif time == "night" %}
+        Have a good night!</h1>
+      {% else %}
+      </h1>
+      {% endif %}    
+    {% elif name %}
+      <h1>Hello {{ name }}</h1>
+    {% else %}
+      <h1>Hello World!</h1>
+    {% endif %}
+  </body>
+</html>

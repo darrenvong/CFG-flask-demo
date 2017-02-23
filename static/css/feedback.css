@@ -1,7 +1,13 @@
-textarea {
-  resize: vertical;
+div {
+  margin: 10px 0;
 }
 
-#submit-button, #send-response {
-  margin-left: 15px;
+label {
+  display: inline-block;
+  width: 100px;
+}
+
+textarea {
+  resize: vertical;
+  font-family: Arial, sans-serif;
 }

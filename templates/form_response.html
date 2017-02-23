@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your comment has been successfully submitted</title>
+</head>
+<body>
+  <h3>Success!</h3>
+  <p>You have submitted the following details:</p>
+  <ul>
+    {# The double curly brace around the Python code tells the template interpreter (Jinja2) used by Flask
+     to run the Python code and print out the textual result of the code onto the page for the user
+     to see in their browser.
+     
+     The "escape" after the vertical bar is a filter offered by Jinja2 to "clean up" the input
+     submitted by the user through the form, in case they type in malicious input which may
+     harm your user's computer and/or your application. #}
+    <li>Name: {{ form_data['name'] | escape }}</li>
+    <li>Email: {{ form_data['email'] | escape }}</li>
+    <li>Your comment: {{ form_data['comments'] | escape }}</li>
+  </ul>
+</body>
+</html>
