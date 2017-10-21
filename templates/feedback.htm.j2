@@ -9,15 +9,7 @@
     <h3>Get In Touch!</h3>
     <p>If you have any suggestions on how to improve this website, feel free to leave your feedback using the form below.</p>
     <form class="form-horizontal" method="post" action="/feedback_submit">
-      {# Macro defined here for simplicity. For more complex cases, consider writing it in a separate file and import it. #}
-      {% macro form_group_div(name, label, type, placeholder, required=False, autofocus=False) %}
-        <div class="form-group">
-          <label for="{{name}}" class="col-xs-12 col-sm-3 control-label">{{label}}</label>
-          <div class="col-xs-12 col-sm-6">
-            <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}" value="" placeholder="{{placeholder}}" {% if required %}required{% endif %} {% if autofocus %}autofocus{% endif %} />
-          </div>
-        </div>
-      {% endmacro %}
+      {% from "form_input_helper.htm.j2" import form_group_div %}
       {{ form_group_div('name', 'Name: ', 'text', 'Your name here', required=True, autofocus=True) }}
       {{ form_group_div('email', 'Email Address: ', 'email', 'Your email here', required=True) }}
       

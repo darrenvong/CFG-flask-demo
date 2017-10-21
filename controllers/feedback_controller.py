@@ -27,7 +27,7 @@ def send_email(name, comment, email):
               """.format(name, comment, email)})
     # A response code of 200 means the request to send the email succeeded
     if send_response.status_code == 200:
-        print "Email successfully sent"
+        print("Email successfully sent")
     else:
-        print send_response.status_code
+        print(send_response.status_code)
         raise EmailNotSentException("Failed to send email (API error)")
