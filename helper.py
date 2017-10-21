@@ -4,24 +4,6 @@ the whole application.
 
 @author: Darren
 """
-import os
-
-# Accessing API keys and confidential information stored in environment variables
-# (for security reasons. Alternatively, store them in a secret configuration file.
-# Whatever option you choose, do not push these to GitHub!
-API_KEY = "api_key"
-DOMAIN_NAME = "os.environ['MAILGUN_DOMAIN_NAME']"
-ADMIN_EMAIL = "os.environ['MAILGUN_ADMIN_EMAIL']"
-
-class EmailNotSentException(Exception):
-    """Exception class which models the case when an email failed to send."""
-    def __init__(self, message):
-        super().__init__()
-        self.message = message
-
-    def __str__(self, *args, **kwargs):
-        return "EmailNotSentException: {}".format(self.message)
-
 
 def is_valid_form_submission(sent_params, allowed_params):
     """Basic paramaters validation to prevent form hacking. Returns True

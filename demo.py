@@ -2,8 +2,7 @@ from secrets import token_urlsafe
 
 from flask import Flask, abort, render_template, request, session, redirect
 
-from helper import EmailNotSentException, is_valid_form_submission
-from controllers.feedback_controller import WHITE_LIST_PARAMS as feedback_params
+from helper import is_valid_form_submission
 from controllers.file_upload_controller import upload_file_to_server, \
     WHITE_LIST_PARAMS as file_upload_params
 from controllers.twitter_demo_controller import request_access_token, \
@@ -38,12 +37,10 @@ def feedback_form():
 
 @app.route("/feedback_submit", methods=['POST'])
 def sign_up():
+    feedback_params = set(["email", "name", "comments"])
     if not is_valid_form_submission(request.form.keys(), feedback_params):
         # better error handling to custom error page if I have time to do so...
         abort(400)
-
-    print('Email "sent"!')
-
     return render_template("comment_ok.htm.j2", name=request.form["name"],
                            comments=request.form["comments"])
 
