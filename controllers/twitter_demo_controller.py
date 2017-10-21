@@ -1,6 +1,6 @@
 """
 This controller module consists of functions responsible for
-orchestrating the functionalities for the 'File Upload' page on the server-side.
+orchestrating the functionalities for the 'Twitter Example' page on the server-side.
 
 @author: Darren
 """
