@@ -6,7 +6,7 @@ from helper import is_valid_form_submission
 from controllers.file_upload_controller import upload_file_to_server, \
     WHITE_LIST_PARAMS as file_upload_params
 from controllers.twitter_demo_controller import request_access_token, \
-    get_access_token
+    get_access_token, get_tweets
 
 app = Flask("demo")
 session = {}
@@ -71,9 +71,13 @@ def twitter_search_handler():
 def twitter_search_cb():
     verifier = request.args.get("oauth_verifier")
     resp_text = get_access_token(verifier, session)
-    print("Access Token: " + session["access_token"])
-    print("Access Token Secret: " + session["access_token_secret"])
-    return resp_text
+    print(session)
+    tweets = get_tweets(session["s"], session["access_token"],
+                        session["access_token_secret"])
+    search_string = session["s"]
+    session.clear()
+    return render_template("tweets.htm.j2", search_string=search_string,
+                           tweets=tweets)
 
 # A Pythonic convention which allows you import this script without necessarily
 # running the flask app defined here

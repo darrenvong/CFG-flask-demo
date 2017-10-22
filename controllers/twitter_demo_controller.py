@@ -36,3 +36,11 @@ def get_access_token(verifier, session):
         return "Error :("
     else:
         return "Success!"
+
+def get_tweets(query, access_token, access_token_secret):
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+
+    tweets = api.search(q=query)
+    return tweets
