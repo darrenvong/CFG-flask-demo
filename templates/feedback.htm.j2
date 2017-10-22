@@ -8,19 +8,11 @@
   <div id="contact-form">
     <h3>Get In Touch!</h3>
     <p>If you have any suggestions on how to improve this website, feel free to leave your feedback using the form below.</p>
-    <form class="form-horizontal" method="post">
-      <div class="form-group">
-        <label for="name" class="col-xs-12 col-sm-3 control-label">Name: </label>
-        <div class="col-xs-12 col-sm-6">
-          <input type="text" class="form-control" id="name" name="name" value="" placeholder="Your name here..." required autofocus />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="email" class="col-xs-12 col-sm-3 control-label">Email: </label>
-        <div class="col-xs-12 col-sm-6">
-          <input type="email" class="form-control" id="email" name="email" value="" placeholder="Your email here..." required />
-        </div>
-      </div>
+    <form class="form-horizontal" method="post" action="/feedback_submit">
+      {% from "form_input_helper.htm.j2" import form_group_div %}
+      {{ form_group_div('name', 'Name: ', 'text', 'Your name here', required=True, autofocus=True) }}
+      {{ form_group_div('email', 'Email Address: ', 'email', 'Your email here', required=True) }}
+      
       <div class="form-group">
         <label for="comment" class="col-xs-12 col-sm-3 control-label">Comments: </label>
         <div class="col-xs-12 col-sm-6">
